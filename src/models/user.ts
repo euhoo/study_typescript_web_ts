@@ -1,9 +1,13 @@
+import axios, {AxiosResponse} from 'axios'
+
 interface UserProps {
+    id?: number
     name?: string
     age?: number
 }
 
 type Callback = () => void
+const baseUrl = 'http://localhost:3000/users';
 
 export class User {
     events: {
@@ -35,5 +39,24 @@ export class User {
         handlers.forEach((cb) => {
             cb()
         })
+    }
+
+    fetch(): void {
+        axios.get(`${baseUrl}/${this.get('id')}`)
+            .then((response: AxiosResponse<UserProps>): void => {
+                this.set(response.data);
+            });
+    }
+
+    save(): void {
+        const id = this.get('id');
+        if (id) {
+            axios.put(`${baseUrl}/${id}`, this.data)
+        } else {
+            axios.post(`${baseUrl}`, this.data)
+                .then((response: AxiosResponse<UserProps>) => {
+                    this.set(response.data)
+                })
+        }
     }
 }
