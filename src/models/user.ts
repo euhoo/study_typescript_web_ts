@@ -10,13 +10,22 @@ interface UserProps {
 
 const rootUrl = 'http://localhost:3000/users';
 
-export class User {
+export class User<T> {
     events: Eventing = new Eventing();
-    sync: Sync<UserProps> = new Sync(rootUrl);
-    attributes: Attributes<UserProps>;
+    sync: Sync<T> = new Sync(rootUrl);
+    attributes: Attributes<T>;
 
-    constructor(data:UserProps) {
-    this.attributes = new Attributes<UserProps>(data)
+    constructor(data: T) {
+        this.attributes = new Attributes<T>(data)
 
+    }
+    get on() {
+        return this.events.on
+    }
+    get trigger() {
+        return this.events.trigger
+    }
+    get get() {
+        return this.attributes.get
     }
 }

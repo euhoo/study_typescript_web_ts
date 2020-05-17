@@ -9,3 +9,11 @@ const user = new User({name: 'new record', age: 0});
 //     console.log('changing');
 // });
 // user.events.trigger('change');
+
+// user.sync.save()
+// console.log(user.get('name'));
+//
+// user.on('change', () => {
+//     console.log('changing');
+// });
+// user.trigger('change');
