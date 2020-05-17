@@ -2,6 +2,7 @@ import {Model} from "./model";
 import {Attributes} from "./attributes";
 import {Eventing} from "./eventing";
 import {ApiSync} from "./apiSync";
+import {Collection} from "./collection";
 
 export interface UserProps {
     id?: number
@@ -17,6 +18,19 @@ export class User extends Model<UserProps> {
             new Attributes<UserProps>(attrs),
             new Eventing(),
             new ApiSync<UserProps>(rootUrl),
+        )
+    }
+    // static buildLocalUser(attrs: UserProps): User {
+    //     return new User(
+    //         new Attributes<UserProps>(attrs),
+    //         new Eventing(),
+    //         new LocalSync<UserProps>(rootUrl),
+    //     )
+    // }
+    static buildUserCollection(): Collection<User, UserProps> {
+        return new Collection<User, UserProps>(
+            'http://localhost:3000/users',
+            (json: UserProps) => User.buildUser(json)
         )
     }
 }
