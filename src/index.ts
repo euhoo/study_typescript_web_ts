@@ -1,19 +1,10 @@
 import {User} from "./models/user";
 
-// const user = new User({id: 1});
-const user = new User({name: 'new record', age: 0});
-// user.set({name: 'NEW', age: 999});
-// user.save();
-// console.log(user);
-// user.events.on('change', () => {
-//     console.log('changing');
-// });
-// user.events.trigger('change');
 
-// user.sync.save()
-// console.log(user.get('name'));
-//
-// user.on('change', () => {
-//     console.log('changing');
-// });
+const user = User.buildUser({id:1});
+
+user.on('save', () => {
+    console.log(user);
+});
 // user.trigger('change');
+user.fetch();
